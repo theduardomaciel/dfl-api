@@ -42,15 +42,16 @@ model Profile {
 }
 
 model Report {
-    id               Int       @id @default(autoincrement())
-    createdAt        DateTime  @default(now())
-    address          String
-    coordinates      Decimal[]
-    image_url        String
-    image_deleteHash String
-    tags             Json
-    suggestion       String
-    hasTrashBins     Boolean   @default(true)
+    id           Int       @id @default(autoincrement())
+    createdAt    DateTime  @default(now())
+    address      String
+    coordinates  Decimal[]
+    tags         Json
+    suggestion   String
+    hasTrashBins Boolean   @default(true)
+
+    images_urls        String[]
+    images_deleteHashs String[]
 
     note1 Int @default(0)
     note2 Int @default(0)
@@ -78,6 +79,10 @@ model Comment {
 
     report    Report @relation(fields: [report_id], references: [id], onDelete: Cascade)
     report_id Int
+
+    Children  Comment[] @relation("Comment_Children")
+    parent    Comment?  @relation("Comment_Children", fields: [parent_id], references: [id])
+    parent_id Int?
 
     @@map("comments")
 }

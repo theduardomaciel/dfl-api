@@ -41,7 +41,6 @@ router.post("/report/comments/read", ensureAuthenticated, new ReadCommentsInRepo
 router.post("/reports/search", ensureAuthenticated, new ReadReportsWithFilterController().handle)
 router.post("/profiles/search", ensureAuthenticated, new ReadProfilesWithFilterController().handle)
 
-
 // Seção de Perfil
 router.post("/profile", new ReadProfileController().handle);
 router.post("/profile/update", ensureAuthenticated, new UpdateProfileController().handle);

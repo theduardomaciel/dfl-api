@@ -3,6 +3,7 @@
         "api": "ts-node-dev --exit-child src/App.ts"
     },
     "dependencies": {
+        "@prisma/client": "^3.14.0",
         "axios": "^0.25.0",
         "dotenv": "^16.0.0",
         "express": "^4.17.2",
