@@ -1,1 +1,1 @@
-web: npx ts-node-dev --exit-child /App.ts
+web: npx ts-node-dev --exit-child App.ts

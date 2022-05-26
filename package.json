@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "ts-node-dev --exit-child /App.ts"
+        "start": "ts-node-dev --exit-child App.ts"
     },
     "dependencies": {
         "@prisma/client": "^3.14.0",
