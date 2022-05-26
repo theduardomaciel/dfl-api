@@ -5,11 +5,11 @@ class DeleteReportController {
     async handle(request: Request, response: Response) {
         const {
             report_id,
-            image_deleteHash
+            images_deleteHashs
         } = request.body;
 
         const service = new DeleteReportService();
-        const result = await service.execute(report_id, image_deleteHash,)
+        const result = await service.execute(report_id, images_deleteHashs,)
 
         return response.json(result)
     }

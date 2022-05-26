@@ -8,8 +8,8 @@ class CreateReportService {
         profile_id: number,
         address: string,
         coordinates: Array<number>,
-        image_url: string,
-        image_deleteHash: string,
+        images_urls: Array<string>,
+        images_deleteHashs: Array<string>,
         tags: string,
         suggestion: string,
         hasTrashBins: boolean
@@ -22,8 +22,8 @@ class CreateReportService {
                     },
                     address: address,
                     coordinates: coordinates,
-                    image_url: image_url,
-                    image_deleteHash: image_deleteHash,
+                    images_urls: images_urls,
+                    images_deleteHashs: images_deleteHashs,
                     tags: JSON.stringify(tags),
 
                     note1: 0,

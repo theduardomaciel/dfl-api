@@ -7,8 +7,8 @@ class CreateReportController {
             profile_id,
             address,
             coordinates,
-            image_url,
-            image_deleteHash,
+            images_urls,
+            images_deleteHashs,
             tags,
             suggestion,
             hasTrashBins
@@ -20,8 +20,8 @@ class CreateReportController {
             profile_id,
             address,
             coordinates,
-            image_url,
-            image_deleteHash,
+            images_urls,
+            images_deleteHashs,
             tags,
             suggestion,
             hasTrashBins
