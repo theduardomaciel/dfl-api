@@ -1,53 +1,49 @@
 import { Router } from "express";
 
 import { AuthenticateUserController } from "./src/controllers/AuthenticateUserController";
-import { UpdateProfileController } from "./src/controllers/UpdateProfileController";
 
-import { CreateReportController } from "./src/controllers/CreateReportController";
-import { UpdateReportController } from "./src/controllers/UpdateReportController";
-import { DeleteReportController } from "./src/controllers/DeleteReportController";
+import { CreateReportController } from "./src/controllers/CREATE/CreateReportController";
+import { CreateCommentInReportController } from "./src/controllers/CREATE/CreateCommentInReportController";
 
-import { CreateCommentInReportController } from "./src/controllers/CreateCommentInReportController";
-import { DeleteCommentInReportController } from "./src/controllers/DeleteCommentInReportController";
-import { ReadCommentsInReportController } from "./src/controllers/ReadCommentsInReportController";
+import { ReadProfileController } from "./src/controllers/READ/ReadProfileController";
+import { ReadUserController } from "./src/controllers/READ/ReadUserController";
+import { ReadCommentsInReportController } from "./src/controllers/READ/ReadCommentsInReportController";
 
-import { UpdateProfileExperienceController } from "./src/controllers/UpdateProfileExperienceController";
+import { UpdateReportController } from "./src/controllers/UPDATE/UpdateReportController";
+import { UpdateProfileController } from "./src/controllers/UPDATE/UpdateProfileController";
+import { UpdateProfileExperienceController } from "./src/controllers/UPDATE/UpdateProfileExperienceController";
 
-import { ReadProfileController } from "./src/controllers/ReadProfileController";
-import { ReadUserController } from "./src/controllers/ReadUserController";
-
-import { ReadProfilesWithFilterController } from "./src/controllers/ReadProfilesWithFilterController";
-import { ReadReportsWithFilterController } from "./src/controllers/ReadReportsWithFilterController";
+import { DeleteReportController } from "./src/controllers/DELETE/DeleteReportController";
+import { DeleteCommentInReportController } from "./src/controllers/DELETE/DeleteCommentInReportController";
 
 import { UploadImageController, DeleteImageController } from "./src/controllers/api_calls/ImageController"
 
 import { ensureAuthenticated } from "./src/middleware/ensureAuthenticated";
+import { ensurePermission } from "./src/middleware/ensurePermission";
 
 const router = Router();
 
 // Autenticação do Usuário
 router.post("/authenticate", new AuthenticateUserController().handle);
-router.post("/user", ensureAuthenticated, new ReadUserController().handle);
+router.get("/user/:user_id", ensurePermission, new ReadUserController().handle);
 
 // Seção de Relatórios
-router.post("/report/create", ensureAuthenticated, new CreateReportController().handle)
-router.post("/report/update", ensureAuthenticated, new UpdateReportController().handle)
-router.post("/report/delete", ensureAuthenticated, new DeleteReportController().handle)
+router.post("/report", ensureAuthenticated, new CreateReportController().handle)
+router.patch("/report/:report_id", ensureAuthenticated, new UpdateReportController().handle)
+router.delete("/report/:report_id", ensureAuthenticated, new DeleteReportController().handle)
 
-router.post("/report/comments/create", ensureAuthenticated, new CreateCommentInReportController().handle)
-router.post("/report/comments/delete", ensureAuthenticated, new DeleteCommentInReportController().handle)
-router.post("/report/comments/read", ensureAuthenticated, new ReadCommentsInReportController().handle)
-
-router.post("/reports/search", ensureAuthenticated, new ReadReportsWithFilterController().handle)
-router.post("/profiles/search", ensureAuthenticated, new ReadProfilesWithFilterController().handle)
+// Seção de Comentários dos Relatórios
+router.post("/report/:report_id/comments", ensureAuthenticated, new CreateCommentInReportController().handle)
+router.delete("/report/:report_id/comments/:comment_id", ensureAuthenticated, new DeleteCommentInReportController().handle)
+router.get("/report/:report_id/comments", ensureAuthenticated, new ReadCommentsInReportController().handle)
 
 // Seção de Perfil
-router.post("/profile", new ReadProfileController().handle);
-router.post("/profile/update", ensureAuthenticated, new UpdateProfileController().handle);
-router.post("/profile/update/experience", ensureAuthenticated, new UpdateProfileExperienceController().handle);
+router.get("/profile/:profile_id", new ReadProfileController().handle);
+router.patch("/profile/:profile_id", ensureAuthenticated, new UpdateProfileController().handle);
+router.patch("/profile/:profile_id/experience", ensureAuthenticated, new UpdateProfileExperienceController().handle);
 
 // Seção de Imagem
 router.post("/upload", ensureAuthenticated, new UploadImageController().handle);
-router.post("/delete", ensureAuthenticated, new DeleteImageController().handle);
+router.delete("/delete", ensureAuthenticated, new DeleteImageController().handle);
 
 export { router }

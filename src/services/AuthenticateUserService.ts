@@ -1,7 +1,6 @@
 import axios from "axios";
 import prismaClient from "../prisma";
 import { sign } from "jsonwebtoken";
-import { Report } from "../@types/application";
 
 /* 
     - Recuperar informações do usuário na Google
@@ -78,13 +77,7 @@ class AuthenticateUserService {
                     profile: {
                         create: {
                             image_url: photo,
-                            ratings: {
-                                1: [],
-                                2: [],
-                                3: [],
-                                4: [],
-                                5: [],
-                            }
+                            ratings: "",
                         }
                     },
                 },
@@ -92,9 +85,9 @@ class AuthenticateUserService {
                     profile: true,
                 }
             })
-            console.log(user, "🙋 Usuário criado com sucesso!")
+            console.log(user, "🙋 Usuário CRIADO com sucesso!")
         } else {
-            console.log(user, "🙋 Usuário logado com sucesso!")
+            console.log(user, "🙋 Usuário LOGADO com sucesso!")
         }
 
         const token = sign({

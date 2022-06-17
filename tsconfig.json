@@ -5,6 +5,9 @@
         "esModuleInterop": true,
         "isolatedModules": true,
         "moduleResolution": "node",
+        "lib": [
+            "ES2015"
+        ],
         "noEmit": true,
         "strict": false,
         "target": "esnext",

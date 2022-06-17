@@ -17,7 +17,7 @@ export type Profile = {
     level: number;
     experience: number;
     reports?: Array<Report>;
-    ratings: any;
+    ratings: string;
 }
 
 export type Report = {

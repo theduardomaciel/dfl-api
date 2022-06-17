@@ -15,6 +15,7 @@
 | /profile| ❌ |  
 | /profile/update | ✅ |
 | /profile/update/experience | ✅ |
+| /profiles/search | ❌ | Retorna todos os perfis encontrados em um determinado local ou os dados de algum perfil pelo nome.
 
 ## Report Routes
 
@@ -23,7 +24,9 @@
 | ----------- | ----------- |----------- |
 | /report/create | ✅ |  
 | /report/update | ✅ |
-| /report/delete| ✅ |
+| /report/delete | ✅ |
+| /reports/search | ❌ | Retorna todos os relatórios encontrados em um determinado local (cidade, estado, etc.)
+
 
 ### - Comment
 | Rota | Autenticação requerida? | Descrição | 
@@ -31,13 +34,6 @@
 | /report/comments/create | ✅ |  
 | /report/comments/delete | ✅ |
 | /report/comments/read| ✅ |
-
-### - Geral
-| Rota | Autenticação requerida? | Descrição | 
-| ----------- | ----------- |----------- |
-| /report/create | ✅ |  
-| /report/update | ✅ |
-| /report/delete| ✅ |
 
 ## Image Service Routes
 | Rota | Autenticação requerida? | Descrição | 

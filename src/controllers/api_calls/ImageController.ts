@@ -18,11 +18,11 @@ class UploadImageController {
 
 class DeleteImageController {
     async handle(request: Request, response: Response) {
-        const { image_deleteHash } = request.body;
+        const { image_deleteHashs } = request.body;
 
         const service = new DeleteImageService();
         try {
-            const result = await service.execute(image_deleteHash)
+            const result = await service.execute(image_deleteHashs)
             return response.json(result);
         } catch (err) {
             return response.json({ error: err.message });
