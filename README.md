@@ -1,42 +1,52 @@
-#  DFL - API
-###  Neste repositório está contido o código do backend da aplicação, incluindo *services* e *controllers* para cuidarem das requisições realizadas tanto pelo aplicativo móvel [DFL - Mobile](https://github.com/theduardomaciel/dfl-mobile), quanto pelo [site](https://github.com/theduardomaciel/dfl-web) disponível na web para o download do aplicativo, que requer acesso a diversas informações do banco de dados da aplicação.
+<h1 align="center">
+  <img alt="DFL - API" height="80" title="DFL - API" src=".github/app_icon.png" />
+</h1>
 
-> No futuro, o [site](https://github.com/theduardomaciel/dfl-web) também será responsável por servir como uma dashboard para indivíduos responsáveis pela coleta de lixo.
+<h1 align="center">
+  DFL - API
+</h1>
 
-## User Routes
-| Rota | Autenticação requerida? | Descrição | 
-| ----------- | ----------- |----------- |
-| /authenticate | ❌ |  
-| /user | ✅|
-
-## Profile Routes
-| Rota | Autenticação requerida? | Descrição | 
-| ----------- | ----------- |----------- |
-| /profile| ❌ |  
-| /profile/update | ✅ |
-| /profile/update/experience | ✅ |
-| /profiles/search | ❌ | Retorna todos os perfis encontrados em um determinado local ou os dados de algum perfil pelo nome.
-
-## Report Routes
-
-### - General
-| Rota | Autenticação requerida? | Descrição | 
-| ----------- | ----------- |----------- |
-| /report/create | ✅ |  
-| /report/update | ✅ |
-| /report/delete | ✅ |
-| /reports/search | ❌ | Retorna todos os relatórios encontrados em um determinado local (cidade, estado, etc.)
+<p align="center">
+  <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=346259&labelColor=26413C">
+    <img src="https://img.shields.io/static/v1?label=version&message=api&color=346259&labelColor=26413C" alt="API" />
+</p>
 
 
-### - Comment
-| Rota | Autenticação requerida? | Descrição | 
-| ----------- | ----------- |----------- |
-| /report/comments/create | ✅ |  
-| /report/comments/delete | ✅ |
-| /report/comments/read| ✅ |
+![cover](.github/cover.png?style=flat)
 
-## Image Service Routes
-| Rota | Autenticação requerida? | Descrição | 
-| ----------- | ----------- |----------- |
-| /upload | ✅ |  Envia uma *string* no formato **HASH** e a converte para uma imagem que será hospedada no Imgur.
-| /delete | ✅ | Deleta a imagem enviada para o Imgur por meio de uma *string* ***image_deletehash***, disponível nos dados do relatório ao qual a imagem pertence.
+
+## 💻 Projeto
+API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionamento dos seguintes elementos:
+* Website
+* Dashboard
+* Mobile App
+
+## ✨ Tecnologias
+
+-   [ ] Prisma
+-   [ ] PostgreSQL
+-   [ ] JavaScript
+-   [ ] Express
+-   [ ] Axios
+
+# API Routes
+
+## User & Authentication
+| Description | Route | Authentication? | Method | 
+| ----------- | ----------- | ----------- |----------- |
+| Authenticate the user on the mobile app or create a account based on Google Accounts for him.<br>Returns a access token to request authenticated api paths. | /authenticate | ❌ | POST 
+| Returns the user object. | /user/[user_id] | ADMIN | GET
+
+## Profile
+| Description | Route | Authentication? | Method | Body
+| ----------- | ----------- | ----------- |----------- | -- |
+| Returns the user profile object. | /profile/[profile_id] | ❌ | GET 
+| Updates the user profile object.<br/> | /profile/[profile_id] | ✅ | PATCH|  defaultCity: string, username: string }
+| Updates the user experience wihout needing to create a report. | /profile/[profile_id]/experience | ✅ | PATCH
+
+
+## 📄 Licença
+
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+
+<br />
