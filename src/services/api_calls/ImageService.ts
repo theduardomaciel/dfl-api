@@ -10,6 +10,9 @@ class UploadImageService {
         const date = new Date();
         const images = []
         const deleteHashs = []
+
+        if (!images_base64) return { images, deleteHashs }
+
         images_base64.forEach(async base64 => {
             try {
                 const response = await client.upload({

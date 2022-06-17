@@ -3,6 +3,7 @@ import prismaClient from "../../prisma"
 import { User, Profile } from "../../@types/application";
 import { CheckUserLevelAndExperience } from "../UPDATE/UpdateProfileExperienceService";
 import { DeleteImageService, UploadImageService } from "../api_calls/ImageService";
+import { Response, response } from "express";
 
 type Props = {
     profile_id: number,
@@ -16,14 +17,22 @@ type Props = {
 }
 
 class CreateReportService {
-    async execute(params) {
+    async execute(response: Response, params) {
         const { profile_id, address, coordinates, images_in_base64, tags, suggestion, hasTrashBins }: Props = params;
 
         try {
             // Fazemos o upload da(s) imagem(ns) para o Imgur
             const service = new UploadImageService();
             try {
-                const { images, deleteHashs } = await service.execute(images_in_base64, profile_id)
+                /* const { images, deleteHashs } = await service.execute(images_in_base64, profile_id)
+
+                if (images.length === 0) {
+                    response.status(400)
+                    return { errorMessage: "No image base64 was provided to upload. It's obligatory to send a report." };
+                } */
+
+                const images = []
+                const deleteHashs = []
 
                 // Em seguida, criamos o relatório
                 await prismaClient.report.create({
@@ -49,6 +58,8 @@ class CreateReportService {
                 });
             } catch (error) {
                 console.log(error)
+                response.status(400)
+                return { errorCode: "database.error" }
             }
 
             // Em seguida encontramos o perfil do usuário que está criando o relatório
@@ -81,6 +92,8 @@ class CreateReportService {
             return updatedProfile
         } catch (error) {
             console.log(error)
+            response.status(500)
+            return error
         }
     }
 }

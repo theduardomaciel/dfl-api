@@ -1,7 +1,8 @@
+import { Response } from "express";
 import prismaClient from "../../prisma";
 
 class ReadProfileService {
-    async execute(profile_id, filters?) {
+    async execute(response?: Response, profile_id?, filters?) {
         if (profile_id) {
             try {
                 const profile = await prismaClient.profile.findUnique({
@@ -12,9 +13,12 @@ class ReadProfileService {
                         reports: true
                     }
                 })
+                console.log(profile, "Perfil do usuário retornado com sucesso.")
                 return profile;
             } catch (error) {
                 console.log(error)
+                response.status(400)
+                return { errorCode: "database.error" }
             }
         } else {
             const { location, username, exclusionsId, searchCount } = filters;
@@ -43,6 +47,8 @@ class ReadProfileService {
                 return profile;
             } catch (error) {
                 console.log(error)
+                response.status(400)
+                return error
             }
         }
     }

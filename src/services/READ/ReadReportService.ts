@@ -1,7 +1,9 @@
+import { response, Response } from "express";
 import prismaClient from "../../prisma";
 
 class ReadReportService {
-    async execute(report_id, filters?) {
+    async execute(response: Response, report_id, filters?) {
+        console.log(report_id)
         if (report_id) {
             try {
                 const report = await prismaClient.report.findUnique({
@@ -15,6 +17,8 @@ class ReadReportService {
                 return report;
             } catch (error) {
                 console.log(error)
+                response.status(400)
+                return { errorCode: "database.error" }
             }
         } else {
             const { location, username, exclusionsId, profileToExcludeId, searchCount, includeInfo } = filters;
@@ -61,6 +65,8 @@ class ReadReportService {
                 return reports;
             } catch (error) {
                 console.log(error)
+                response.status(400)
+                return error
             }
         }
     }

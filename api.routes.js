@@ -8,6 +8,7 @@ import { CreateCommentInReportController } from "./src/controllers/CREATE/Create
 import { ReadProfileController } from "./src/controllers/READ/ReadProfileController";
 import { ReadUserController } from "./src/controllers/READ/ReadUserController";
 import { ReadCommentsInReportController } from "./src/controllers/READ/ReadCommentsInReportController";
+import { ReadReportController } from "./src/controllers/READ/ReadReportController";
 
 import { UpdateReportController } from "./src/controllers/UPDATE/UpdateReportController";
 import { UpdateProfileController } from "./src/controllers/UPDATE/UpdateProfileController";
@@ -28,6 +29,7 @@ router.post("/authenticate", new AuthenticateUserController().handle);
 router.get("/user/:user_id", ensurePermission, new ReadUserController().handle);
 
 // Seção de Relatórios
+router.get("/report/:report_id", new ReadReportController().handle)
 router.post("/report", ensureAuthenticated, new CreateReportController().handle)
 router.patch("/report/:report_id", ensureAuthenticated, new UpdateReportController().handle)
 router.delete("/report/:report_id", ensureAuthenticated, new DeleteReportController().handle)

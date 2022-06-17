@@ -1,7 +1,13 @@
 import prismaClient from "../../prisma"
 
+type Props = {
+    defaultCity: string;
+    username: string;
+}
+
 class UpdateProfileService {
-    async execute(profile_id: number, username: string, defaultCity: string) {
+    async execute(profile_id: number, params: Props) {
+        const { username, defaultCity } = params;
         try {
             const profile = await prismaClient.profile.update({
                 where: {
