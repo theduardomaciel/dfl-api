@@ -16,55 +16,48 @@ async function UpdateProfileRating(profile_id, report_id, rating) {
             }
         })
 
-        const originalProfileNotes = profile.ratings;
-        let profileNotes = originalProfileNotes;
-
-        const count = Object.keys(originalProfileNotes).length;
+        const profileNotes = profile.ratings;
 
         console.log(`Antigas avaliações: `, profileNotes)
         async function verifyPreviousVote() {
+            const count = Object.keys(profileNotes);
             // Verificamos se o perfil já votou nesse relatório (independentemente de qual a nota)
-            for (let index = 1; index <= count; index++) {
-                // Verificamos nota por nota se o usuário já votou (nota = index)
-                const index_reports = profileNotes["note" + index];
-                index_reports.forEach(async reportId => {
-                    // Caso encontremos um relatório com a mesmo id do atual, o usuário já votou nesse relatório (com a nota = index)
-                    if (reportId === report_id) {
-                        // Se essa nota (index) for igual a nota que será adicionada no relatório, paramos a atualização, já que o usuário já votou. 
-                        // Não podemos adicionar essa nota novamente.
-                        if (index === rating) {
-                            return false
-                        } else {
-                            // Como encontramos um relatório em que o usuário já votou, removemos ele
-                            await prismaClient.report.update({
-                                where: {
-                                    id: report_id
+            for (let index = 1; index <= count.length; index++) {
+                const note = profileNotes[`note${index}`];
+                if (note.includes(report_id)) {
+                    if (index === rating) {
+                        console.log(`O usuário já votou com a nota ${rating}. Cancelando função.`)
+                        return false
+                    } else {
+                        const indexOfNote = note.indexOf(report_id)
+                        console.log(`O usuário já votou com a nota ${index} que está no index ${indexOfNote}`)
+                        profileNotes[`note${index}`].splice(indexOfNote, 1)
+                        await prismaClient.report.update({
+                            where: {
+                                id: report_id
+                            },
+                            data: {
+                                note1: {
+                                    decrement: index === 1 ? 1 : 0,
                                 },
-                                data: {
-                                    note1: {
-                                        decrement: index === 1 ? 1 : 0,
-                                    },
-                                    note2: {
-                                        decrement: index === 2 ? 1 : 0,
-                                    },
-                                    note3: {
-                                        decrement: index === 3 ? 1 : 0,
-                                    },
-                                    note4: {
-                                        decrement: index === 4 ? 1 : 0,
-                                    },
-                                    note5: {
-                                        decrement: index === 5 ? 1 : 0,
-                                    },
+                                note2: {
+                                    decrement: index === 2 ? 1 : 0,
                                 },
-                            });
-                            console.log("Como o usuário já havia votado anteriormente no relatório, estamos removendo essa avaliação.")
-                        }
+                                note3: {
+                                    decrement: index === 3 ? 1 : 0,
+                                },
+                                note4: {
+                                    decrement: index === 4 ? 1 : 0,
+                                },
+                                note5: {
+                                    decrement: index === 5 ? 1 : 0,
+                                },
+                            },
+                        });
                     }
-                });
-                profileNotes["note" + index] = index_reports
-                return true
+                }
             }
+            return true;
         }
         const continueUpdating = await verifyPreviousVote()
 
@@ -124,7 +117,7 @@ class UpdateReportService {
                 await UpdateProfileRating(profile_id, report_id, rating)
             }
 
-            if (tags) {
+            if (tags !== undefined) {
                 await prismaClient.report.update({
                     where: {
                         id: report_id,
@@ -135,7 +128,7 @@ class UpdateReportService {
                 })
             }
 
-            if (resolved) {
+            if (resolved !== undefined) {
                 await prismaClient.report.update({
                     where: {
                         id: report_id,
@@ -146,7 +139,7 @@ class UpdateReportService {
                 })
             }
 
-            if (approved) {
+            if (approved !== undefined) {
                 await prismaClient.report.update({
                     where: {
                         id: report_id,

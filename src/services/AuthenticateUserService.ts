@@ -50,7 +50,7 @@ async function GetAdditionalInfo(access_token: string) {
 
 class AuthenticateUserService {
     async execute(userInfo, access_token: string) {
-        const { email, id, familyName, givenName, photo } = userInfo.user;
+        const { email, id, familyName, givenName, photo } = userInfo;
         //const [gender, birthday] = await GetAdditionalInfo(access_token)
 
         let user;
@@ -102,7 +102,7 @@ class AuthenticateUserService {
                 image_url: user.image_url,
                 id: user.id,
             },
-        }, process.env.JWT_SECRET, { subject: user.google_id, expiresIn: "1d", audience: "mobile-app" });
+        }, process.env.JWT_SECRET, { subject: user.google_id, expiresIn: "2 months", audience: "app-user" });
 
         return { token, user };
     }

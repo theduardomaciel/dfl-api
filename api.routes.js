@@ -35,8 +35,8 @@ router.patch("/report/:report_id", ensureAuthenticated, new UpdateReportControll
 router.delete("/report/:report_id", ensureAuthenticated, new DeleteReportController().handle)
 
 // Seção de Comentários dos Relatórios
-router.post("/report/:report_id/comments", ensureAuthenticated, new CreateCommentInReportController().handle)
-router.delete("/report/:report_id/comments/:comment_id", ensureAuthenticated, new DeleteCommentInReportController().handle)
+router.post("/report/:report_id/comment", ensureAuthenticated, new CreateCommentInReportController().handle)
+router.delete("/report/:report_id/comment/:comment_id", ensureAuthenticated, new DeleteCommentInReportController().handle)
 router.get("/report/:report_id/comments", ensureAuthenticated, new ReadCommentsInReportController().handle)
 
 // Seção de Perfil

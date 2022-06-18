@@ -32,18 +32,71 @@ API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionam
 # API Routes
 
 ## User & Authentication
-| Description | Route | Authentication? | Method | 
-| ----------- | ----------- | ----------- |----------- |
-| Authenticate the user on the mobile app or create a account based on Google Accounts for him.<br>Returns a access token to request authenticated api paths. | /authenticate | ❌ | POST 
-| Returns the user object. | /user/[user_id] | ADMIN | GET
+| Route           | Description                                                                                                                                                 | Authentication? | Method | Body                        |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------- | ------ | --------------------------- |
+| /authenticate   | Authenticate the user on the mobile app or create a account based on Google Accounts for him.<br>Returns a access token to request authenticated api paths. | ❌               | POST   | { user_info, access_token } |
+| /user/[user_id] | Returns the user object.                                                                                                                                    | ADMIN           | GET    |
+
+~~~typescript
+user_info: { 
+    email: string, 
+    id: number, //equivale ao ID do Google, e não ao ID que será criado pela API
+    familyName: string, // equivalente a "lastName"
+    givenName: string, //equivalente a "firstName"
+    photo: string 
+}
+~~~
+
+~~~typescript
+access_token: string 
+// equivale ao token de acesso do Google para que informações adicionais sejam obtidas (ex.: gênero e data de nascimento)
+~~~
 
 ## Profile
-| Description | Route | Authentication? | Method | Body
-| ----------- | ----------- | ----------- |----------- | -- |
-| Returns the user profile object. | /profile/[profile_id] | ❌ | GET 
-| Updates the user profile object.<br/> | /profile/[profile_id] | ✅ | PATCH|  defaultCity: string, username: string }
-| Updates the user experience wihout needing to create a report. | /profile/[profile_id]/experience | ✅ | PATCH
+| Route                            | Description                                                                                                          | Authentication? | Method | Body                                      |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------- | --------------- | ------ | ----------------------------------------- |
+| /profile/[profile_id]            | Returns the user profile object.                                                                                     | ❌               | GET    |
+| /profile/[profile_id]            | Updates the user profile object.<br/>                                                                                | ✅               | PATCH  | { username: string, defaultCity: string } |
+| /profile/[profile_id]/experience | Updates the user experience without needing to create a report.<br/>Only updates the equivalent to the player level. | ✅               | PATCH  |
 
+## Reports
+| Route               | Description                                              | Authentication? | Method | Body       |
+| ------------------- | -------------------------------------------------------- | --------------- | ------ | ---------- |
+| /report/[report_id] | Returns the report object.                               | ❌               | GET    |
+| /report             | Creates a report for a user profile with the given data. | ✅               | POST   | Post Body  |
+| /report/[report_id] | Updates the report object.                               | ✅               | PATCH  | Patch Body |
+|                     |
+
+Post Body:
+~~~typescript
+{ 
+    profile_id: number,
+    tags: string || JSON, 
+    address: string, 
+    coordinates: Array<number>, 
+    images: Array<string>, // devem estar no formato base64 
+    suggestion: string, 
+    hasTrashBins: boolean 
+}
+~~~
+
+Patch Body:
+~~~typescript
+{ 
+    profile_id: number, 
+    rating: number, // a nota que está sendo adicionada pelo usuário (mobile app)
+    tags: string || JSON, 
+    resolved: boolean, 
+    approved: boolean, 
+}
+~~~
+
+### Comments
+| Route                                    | Description                                       | Authentication? | Method | Body                                    |
+| ---------------------------------------- | ------------------------------------------------- | --------------- | ------ | --------------------------------------- |
+| /report/[report_id]/comment              | Creates a comment in a report                     | ✅               | POST   | { profile_id: number, content: string } |
+| /report/[report_id]/comment/[comment_id] | Returns a comment of a report with the given ID's | ✅               | GET    |
+| /report/[report_id]/comments             | Returns all the comments of a report.             | ✅               | GET    |
 
 ## 📄 Licença
 

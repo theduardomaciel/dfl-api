@@ -1,9 +1,7 @@
 import prismaClient from "../../prisma"
 
 class DeleteCommentInReportService {
-    async execute(
-        comment_id
-    ) {
+    async execute(comment_id) {
         try {
             await prismaClient.comment.delete({
                 where: {

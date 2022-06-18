@@ -17,11 +17,11 @@ class DeleteReportService {
                     id: report_id
                 },
             })
-            console.log("Relatório removido do banco de dados com sucesso!")
+            console.log("🗑️ Relatório removido do banco de dados com sucesso!")
             const service = new DeleteImageService();
             try {
                 await service.execute(image_deleteHashs)
-                console.log("Imagem(ns) do relatório removida(s) do imgur com sucesso!")
+                console.log("🤳 Imagem(ns) do relatório removida(s) do imgur com sucesso!")
             } catch (error) {
                 console.log(error)
             }

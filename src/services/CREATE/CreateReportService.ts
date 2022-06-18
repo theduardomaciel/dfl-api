@@ -9,7 +9,7 @@ type Props = {
     profile_id: number,
     address: string,
     coordinates: Array<number>,
-    images_in_base64: Array<string>,
+    images: Array<string>,
     images_deleteHashs: Array<string>,
     tags: string,
     suggestion: string,
@@ -18,13 +18,13 @@ type Props = {
 
 class CreateReportService {
     async execute(response: Response, params) {
-        const { profile_id, address, coordinates, images_in_base64, tags, suggestion, hasTrashBins }: Props = params;
+        const { profile_id, address, coordinates, images, tags, suggestion, hasTrashBins }: Props = params;
 
         try {
             // Fazemos o upload da(s) imagem(ns) para o Imgur
             const service = new UploadImageService();
             try {
-                /* const { images, deleteHashs } = await service.execute(images_in_base64, profile_id)
+                /* const { images, deleteHashs } = await service.execute(images, profile_id)
 
                 if (images.length === 0) {
                     response.status(400)
