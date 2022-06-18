@@ -23,28 +23,35 @@ class ReadProfileService {
         } else {
             const { location, username, exclusionsId, searchCount } = filters;
             try {
-                const profile = await prismaClient.profile.findMany({
-                    where: {
-                        OR: [
-                            {
-                                username: username && username
-                            },
-                            {
-                                defaultCity: location && location,
-                            }
-                        ],
-                        NOT: [
-                            {
-                                id: exclusionsId
-                            }
-                        ]
-                    },
-                    include: {
-                        reports: true
-                    },
-                    take: searchCount && searchCount
-                })
-                return profile;
+                if (location || username) {
+                    const profile = await prismaClient.profile.findMany({
+                        where: {
+                            OR: [
+                                {
+                                    username: username && username
+                                },
+                                {
+                                    defaultCity: location && location,
+                                }
+                            ],
+                            NOT: [
+                                {
+                                    id: exclusionsId
+                                }
+                            ]
+                        },
+                        include: {
+                            reports: true
+                        },
+                        take: searchCount && searchCount
+                    })
+                    return profile;
+                } else {
+                    const profile = await prismaClient.profile.findMany({
+                        take: searchCount && parseInt(searchCount)
+                    })
+                    return profile;
+                }
             } catch (error) {
                 console.log(error)
                 response.status(400)

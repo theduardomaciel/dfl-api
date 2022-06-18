@@ -3,7 +3,6 @@ import prismaClient from "../../prisma";
 
 class ReadReportService {
     async execute(response: Response, report_id, filters?) {
-        console.log(report_id)
         if (report_id) {
             try {
                 const report = await prismaClient.report.findUnique({
@@ -23,46 +22,54 @@ class ReadReportService {
         } else {
             const { location, username, exclusionsId, profileToExcludeId, searchCount, includeInfo } = filters;
             try {
-                const reports = await prismaClient.report.findMany({
-                    where: {
-                        OR: [
-                            {
-                                address: location && {
-                                    contains: location,
-                                    mode: "insensitive"
-                                },
-                            },
-                            {
-                                profile: {
-                                    username: username && {
-                                        contains: username,
+                if (location || username) {
+                    const reports = await prismaClient.report.findMany({
+                        where: {
+                            OR: [
+                                {
+                                    address: location && {
+                                        contains: location,
                                         mode: "insensitive"
                                     },
                                 },
-                            }
-                        ],
-                        AND: [
-                            {
-                                id: { notIn: exclusionsId },
-                            },
-                            {
-                                profile_id: { not: profileToExcludeId }
+                                {
+                                    profile: {
+                                        username: username && {
+                                            contains: username,
+                                            mode: "insensitive"
+                                        },
+                                    },
+                                }
+                            ],
+                            AND: [
+                                {
+                                    id: { notIn: exclusionsId },
+                                },
+                                {
+                                    profile_id: { not: profileToExcludeId }
 
-                            }
-                        ]
-                    },
-                    take: searchCount && searchCount,
-                    include: includeInfo && {
-                        comments: {
-                            include: {
-                                profile: true
-                            }
+                                }
+                            ]
                         },
-                        profile: true
-                    }
-                })
-                console.log(reports, searchCount ? `Obtivemos os ${searchCount} primeiros relatórios com os filtros determinados.` : `Obtivemos os relatórios com os filtros determinados.`)
-                return reports;
+                        take: searchCount && parseInt(searchCount),
+                        include: includeInfo && {
+                            comments: {
+                                include: {
+                                    profile: true
+                                }
+                            },
+                            profile: true
+                        }
+                    })
+                    console.log(reports, searchCount ? `Obtivemos os ${searchCount} primeiros relatórios com os filtros determinados.` : `Obtivemos os relatórios com os filtros determinados.`)
+                    return reports;
+                } else {
+                    const reports = await prismaClient.report.findMany({
+                        take: searchCount && parseInt(searchCount),
+                    })
+                    console.log(`Obtivemos todos os relatórios com sucesso.`)
+                    return reports;
+                }
             } catch (error) {
                 console.log(error)
                 response.status(400)

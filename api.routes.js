@@ -30,6 +30,7 @@ router.get("/user/:user_id", ensurePermission, new ReadUserController().handle);
 
 // Seção de Relatórios
 router.get("/report/:report_id", new ReadReportController().handle)
+router.get("/report", new ReadReportController().handle)
 router.post("/report", ensureAuthenticated, new CreateReportController().handle)
 router.patch("/report/:report_id", ensureAuthenticated, new UpdateReportController().handle)
 router.delete("/report/:report_id", ensureAuthenticated, new DeleteReportController().handle)
@@ -40,6 +41,7 @@ router.delete("/report/:report_id/comment/:comment_id", ensureAuthenticated, new
 router.get("/report/:report_id/comments", ensureAuthenticated, new ReadCommentsInReportController().handle)
 
 // Seção de Perfil
+router.get("/profile", new ReadProfileController().handle);
 router.get("/profile/:profile_id", new ReadProfileController().handle);
 router.patch("/profile/:profile_id", ensureAuthenticated, new UpdateProfileController().handle);
 router.patch("/profile/:profile_id/experience", ensureAuthenticated, new UpdateProfileExperienceController().handle);
