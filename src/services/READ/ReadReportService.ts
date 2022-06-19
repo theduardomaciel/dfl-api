@@ -66,6 +66,14 @@ class ReadReportService {
                 } else {
                     const reports = await prismaClient.report.findMany({
                         take: searchCount && parseInt(searchCount),
+                        include: includeInfo && {
+                            comments: {
+                                include: {
+                                    profile: true
+                                }
+                            },
+                            profile: true
+                        }
                     })
                     console.log(`Obtivemos todos os relatórios com sucesso.`)
                     return reports;
