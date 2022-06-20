@@ -5,7 +5,7 @@ class ReadAdminController {
     async handle(request: Request, response: Response) {
         const service = new ReadAdminService();
         try {
-            const result = await service.execute(response, request.params.id)
+            const result = await service.execute(response, request.params.id, request.query)
             return response.json(result);
         } catch (err) {
             return response.json({ error: err.message });
