@@ -102,7 +102,7 @@ class AuthenticateUserService {
                 image_url: user.image_url,
                 id: user.id,
             },
-        }, process.env.JWT_SECRET, { subject: user.google_id, expiresIn: "2 months", audience: "app-user" });
+        }, process.env.JWT_SECRET, { subject: user.google_id, expiresIn: "120d", audience: "app-user" });
 
         return { token, user };
     }

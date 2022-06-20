@@ -11,26 +11,33 @@ class ReadAdminService {
                     where: {
                         id: id,
                     },
+                    select: {
+                        first_name: true,
+                        last_name: true,
+                        image_url: true,
+                        role: true
+                    }
                 })
             } else {
                 admin = await prismaClient.admin.findUnique({
                     where: {
                         email: email,
                     },
+                    select: {
+                        first_name: true,
+                        last_name: true,
+                        image_url: true,
+                        role: true
+                    }
                 })
             }
             if (!admin) {
                 response.status(400)
                 return {
-                    errorMessage: `No admin was found with the given email.`
+                    errorMessage: `No admin was found with the given id or email.`
                 }
             }
-            const controlledObject = {
-                firstName: admin.first_name,
-                lastName: admin.last_name,
-                image_url: admin.image_url
-            }
-            return controlledObject;
+            return admin;
         } catch (error) {
             console.log(error)
             response.status(400)

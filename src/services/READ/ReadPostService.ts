@@ -10,7 +10,14 @@ class ReadPostService {
                         title: post_title,
                     },
                     include: {
-                        redactor: true
+                        redactor: {
+                            select: {
+                                first_name: true,
+                                last_name: true,
+                                image_url: true,
+                                role: true
+                            }
+                        }
                     }
                 })
                 console.log(profile, "Dados do post retornados com sucesso.")

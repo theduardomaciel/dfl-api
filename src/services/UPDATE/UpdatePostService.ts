@@ -1,3 +1,4 @@
+import { Response } from "express";
 import prismaClient from "../../prisma"
 
 type Props = {
@@ -8,7 +9,7 @@ type Props = {
 }
 
 class UpdatePostService {
-    async execute(originalTitle: string, params: Props) {
+    async execute(response: Response, originalTitle: string, params: Props) {
         const { title, content, draft, fixed } = params;
         try {
             if (content) {
@@ -22,7 +23,7 @@ class UpdatePostService {
                 });
             }
 
-            if (draft !== undefined) {
+            if (draft == true || draft === false) {
                 await prismaClient.post.update({
                     where: {
                         title: originalTitle,
@@ -33,13 +34,13 @@ class UpdatePostService {
                 });
             }
 
-            if (fixed !== undefined) {
+            if (fixed === true || fixed === false) {
                 await prismaClient.post.update({
                     where: {
                         title: originalTitle,
                     },
                     data: {
-                        draft: fixed
+                        fixed: fixed
                     }
                 });
             }
@@ -70,6 +71,8 @@ class UpdatePostService {
             }
         } catch (error) {
             console.log(error);
+            response.status(400)
+            return { errorMessage: "The id (title) provided does not belong to a post." }
         }
     }
 }

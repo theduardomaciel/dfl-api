@@ -39,7 +39,7 @@ class AuthenticateAdminService {
 
         const token = sign({
             admin: { id: admin.id },
-        }, process.env.JWT_SECRET_ADMIN, { subject: admin.id, expiresIn: "4 months", audience: "dashboard-admin" });
+        }, process.env.JWT_SECRET_ADMIN, { subject: admin.id, expiresIn: "240d", audience: "dashboard-admin" });
 
         return { token, admin };
     }

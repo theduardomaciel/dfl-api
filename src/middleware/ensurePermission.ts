@@ -20,8 +20,11 @@ export function ensurePermission(request: Request, response: Response, next: Nex
 
     const [type, codifiedLogin] = credentials.split(" ");
 
-    if (type === "basic") {
+    console.log("Tipo ", type)
+    if (type === "Basic") {
+        console.log(type, codifiedLogin)
         if (codifiedLogin === process.env.LOGIN_SECRET) {
+            console.log("Foi")
             return next();
         } else {
             return response.status(401).json({ errorCode: "login.invalid" });
