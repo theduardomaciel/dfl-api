@@ -27,14 +27,14 @@ class AuthenticateAdminService {
 
             const service = new UploadImageService();
             const { images, deleteHashs } = await service.execute([image_url.split("data:image/jpeg;base64,")[1]], role)
-            if (images[0]) { console.log("Admin profile image uploaded with success!") }
+            if (images[0]) { console.log("Admin profile image uploaded with success!") } else { console.log("❌ There wasn't possible to upload profile image.") }
 
             try {
                 admin = await prismaClient.admin.create({
                     data: {
                         email: email,
                         first_name: firstName,
-                        image_url: images[0],
+                        image_url: images[0] ? images[0] : "https://blog.megajogos.com.br/wp-content/uploads/2018/07/no-image.jpg",
                         last_name: lastName,
                         role: roleSecured,
                         password: password ? password : "e87d1ab34ebb528a4d5e8d4b4f2610e8",

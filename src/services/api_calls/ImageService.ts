@@ -13,7 +13,8 @@ class UploadImageService {
 
         if (!images_base64) return { images, deleteHashs }
 
-        await images_base64.forEach(async base64 => {
+        for (let i = 0; i < images_base64.length; i++) {
+            const base64 = images_base64[i];
             try {
                 const response = await client.upload({
                     image: base64,
@@ -22,12 +23,12 @@ class UploadImageService {
                 });
                 images.push(response.data.link)
                 deleteHashs.push(response.data.deletehash)
-                console.log("✅ UPLOADED image with success!", response.data, images);
+                console.log("✅ Uploaded image with success!");
             } catch (error) {
                 console.log(error)
+                console.log("❌ There was not possible to upload the image.",);
             }
-        });
-        console.log(images)
+        }
         return { images, deleteHashs }
     }
 }
