@@ -23,7 +23,7 @@ class AuthenticateAdminService {
         })
 
         if (!admin) {
-            const roleSecured = role !== null ? role : "colector"
+            const roleSecured = role ? role : "colector"
 
             const service = new UploadImageService();
             const { images, deleteHashs } = await service.execute([image_url.split("data:image/jpeg;base64,")[1]], role)
@@ -40,10 +40,10 @@ class AuthenticateAdminService {
                         password: password ? password : "e87d1ab34ebb528a4d5e8d4b4f2610e8",
                     }
                 })
+                console.log(admin, `🏗️ Administrador criado com sucesso.`)
             } catch (error) {
                 console.log(error)
             }
-            console.log(admin, `🏗️ Administrador de cargo: "${admin.role}" criado com sucesso.`)
         } else {
             console.log(admin, "🏗️ Administrador logado com sucesso!")
         }
