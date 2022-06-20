@@ -25,7 +25,7 @@ class ReadUserService {
             return user;
         } catch (error) {
             console.log(error)
-            response.status(400)
+            response.status(500)
             return { errorMessage: error }
         }
     }

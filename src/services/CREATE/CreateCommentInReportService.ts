@@ -1,11 +1,8 @@
+import { Response } from "express";
 import prismaClient from "../../prisma"
 
 class CreateCommentInReportService {
-    async execute(
-        profile_id,
-        report_id,
-        content
-    ) {
+    async execute(response: Response, profile_id, report_id, content) {
         try {
             const comment = await prismaClient.comment.create({
                 data: {
@@ -29,6 +26,8 @@ class CreateCommentInReportService {
             return comment;
         } catch (error) {
             console.log(error)
+            response.status(500)
+            return { error: error }
         }
     }
 }

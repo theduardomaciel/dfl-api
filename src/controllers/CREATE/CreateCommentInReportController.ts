@@ -9,11 +9,7 @@ class CreateCommentInReportController {
         } = request.body;
 
         const service = new CreateCommentInReportService();
-        const result = await service.execute(
-            profile_id,
-            request.params.report_id,
-            content
-        )
+        const result = await service.execute(response, profile_id, request.params.report_id, content)
 
         return response.json(result)
     }

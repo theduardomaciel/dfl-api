@@ -1,5 +1,6 @@
 import prismaClient from "../prisma";
 import { sign } from "jsonwebtoken";
+import { UploadImageService } from "./api_calls/ImageService";
 
 /* 
     - Recuperar informações do usuário na Google
@@ -22,11 +23,15 @@ class AuthenticateAdminService {
         })
 
         if (!admin) {
+            const service = new UploadImageService();
+            const { images, deleteHashs } = await service.execute([image_url], role)
+            if (images[0]) { console.log("Image uploaded with success!") }
+
             admin = await prismaClient.admin.create({
                 data: {
                     email: email,
                     first_name: firstName,
-                    image_url: image_url,
+                    image_url: images[0],
                     last_name: lastName,
                     role: role ? role : "colector",
                     password: password ? password : "e87d1ab34ebb528a4d5e8d4b4f2610e8", //equivale a dashboard-dfl em hash md5

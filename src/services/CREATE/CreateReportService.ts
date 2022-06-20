@@ -9,7 +9,7 @@ type Props = {
     profile_id: number,
     address: string,
     coordinates: Array<number>,
-    images: Array<string>,
+    imagesBase64: Array<string>,
     images_deleteHashs: Array<string>,
     tags: string,
     suggestion: string,
@@ -18,21 +18,18 @@ type Props = {
 
 class CreateReportService {
     async execute(response: Response, params) {
-        const { profile_id, address, coordinates, images, tags, suggestion, hasTrashBins }: Props = params;
+        const { profile_id, address, coordinates, imagesBase64, tags, suggestion, hasTrashBins }: Props = params;
 
         try {
             // Fazemos o upload da(s) imagem(ns) para o Imgur
             const service = new UploadImageService();
             try {
-                /* const { images, deleteHashs } = await service.execute(images, profile_id)
+                const { images, deleteHashs } = await service.execute(imagesBase64, profile_id)
 
                 if (images.length === 0) {
                     response.status(400)
                     return { errorMessage: "No image base64 was provided to upload. It's obligatory to send a report." };
-                } */
-
-                const images = []
-                const deleteHashs = []
+                }
 
                 // Em seguida, criamos o relatório
                 await prismaClient.report.create({
