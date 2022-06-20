@@ -2,9 +2,9 @@ import { Response } from "express";
 import prismaClient from "../../prisma";
 
 class ReadAdminService {
-    async execute(response: Response, id, query) {
-        const { email } = query;
+    async execute(response: Response, id, body) {
         try {
+            const { email } = body;
             let admin;
             if (id) {
                 admin = await prismaClient.admin.findUnique({
@@ -34,7 +34,7 @@ class ReadAdminService {
             if (!admin) {
                 response.status(400)
                 return {
-                    errorMessage: `No admin was found with the given id or email.`
+                    errorMessage: `No admin was found with the given id.`
                 }
             }
             return admin;

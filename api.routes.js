@@ -56,7 +56,7 @@ router.patch("/profile/:profile_id/experience", ensureAuthenticated, new UpdateP
 
 // Admin
 router.post("/authenticate/admin", ensurePermission, new AuthenticateAdminController().handle);
-router.get("/admin", new ReadAdminController().handle);
+router.post("/admin", new ReadAdminController().handle);
 router.get("/admin/:id", new ReadAdminController().handle);
 router.delete("/admin/:id", ensurePermission, new DeleteAdminController().handle);
 
