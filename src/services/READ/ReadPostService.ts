@@ -1,19 +1,19 @@
 import { Response } from "express";
 import prismaClient from "../../prisma";
 
-class ReadProfileService {
-    async execute(response?: Response, profile_id?, filters?) {
-        if (profile_id) {
+class ReadPostService {
+    async execute(response?: Response, post_title?, filters?) {
+        if (post_title) {
             try {
-                const profile = await prismaClient.profile.findUnique({
+                const profile = await prismaClient.post.findUnique({
                     where: {
-                        id: profile_id,
+                        title: post_title,
                     },
                     include: {
-                        reports: true
+                        redactor: true
                     }
                 })
-                console.log(profile, "Perfil do usuário retornado com sucesso.")
+                console.log(profile, "Dados do post retornados com sucesso.")
                 return profile;
             } catch (error) {
                 console.log(error)
@@ -21,36 +21,36 @@ class ReadProfileService {
                 return { errorCode: "database.error" }
             }
         } else {
-            const { location, username, exclusionsId, searchCount } = filters;
+            const { content, draft, searchCount } = filters;
             try {
-                if (location || username) {
-                    const profile = await prismaClient.profile.findMany({
+                if (content) {
+                    const posts = await prismaClient.post.findMany({
                         where: {
                             OR: [
                                 {
-                                    username: username && username
+                                    content: {
+                                        contains: content,
+                                    }
                                 },
                                 {
-                                    defaultCity: location && location,
-                                }
-                            ],
-                            NOT: [
-                                {
-                                    id: exclusionsId
+                                    draft: draft
                                 }
                             ]
                         },
                         include: {
-                            reports: true
+                            redactor: true
                         },
                         take: searchCount && parseInt(searchCount)
                     })
-                    return profile;
+                    return posts;
                 } else {
-                    const profile = await prismaClient.profile.findMany({
+                    const posts = await prismaClient.post.findMany({
+                        include: {
+                            redactor: true
+                        },
                         take: searchCount && parseInt(searchCount)
                     })
-                    return profile;
+                    return posts;
                 }
             } catch (error) {
                 console.log(error)
@@ -61,4 +61,4 @@ class ReadProfileService {
     }
 }
 
-export { ReadProfileService }
+export { ReadPostService }

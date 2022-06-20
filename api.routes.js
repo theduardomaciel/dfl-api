@@ -22,31 +22,50 @@ import { UploadImageController, DeleteImageController } from "./src/controllers/
 import { ensureAuthenticated } from "./src/middleware/ensureAuthenticated";
 import { ensurePermission } from "./src/middleware/ensurePermission";
 
+import { AuthenticateAdminController } from "./src/controllers/AuthenticateAdminController";
+import { ReadAdminController } from "./src/controllers/READ/ReadAdminController";
+import { DeleteAdminController } from "./src/controllers/DELETE/DeleteAdminController";
+
+import { ReadPostController } from "./src/controllers/READ/ReadPostController";
+import { CreatePostController } from "./src/controllers/CREATE/CreatePostController";
+import { UpdatePostController } from "./src/controllers/UPDATE/UpdatePostController";
+import { DeletePostController } from "./src/controllers/DELETE/DeletePostController";
+
 const router = Router();
 
 // Autenticação do Usuário
 router.post("/authenticate", new AuthenticateUserController().handle);
 router.get("/user/:user_id", ensurePermission, new ReadUserController().handle);
 
-// Seção de Relatórios
+// Relatórios
 router.get("/report/:report_id", new ReadReportController().handle)
 router.get("/report", new ReadReportController().handle)
 router.post("/report", ensureAuthenticated, new CreateReportController().handle)
 router.patch("/report/:report_id", ensureAuthenticated, new UpdateReportController().handle)
 router.delete("/report/:report_id", ensureAuthenticated, new DeleteReportController().handle)
-
-// Seção de Comentários dos Relatórios
+/* Comentários */
 router.post("/report/:report_id/comment", ensureAuthenticated, new CreateCommentInReportController().handle)
 router.delete("/report/:report_id/comment/:comment_id", ensureAuthenticated, new DeleteCommentInReportController().handle)
 router.get("/report/:report_id/comments", ensureAuthenticated, new ReadCommentsInReportController().handle)
 
-// Seção de Perfil
+// Perfil
 router.get("/profile", new ReadProfileController().handle);
 router.get("/profile/:profile_id", new ReadProfileController().handle);
 router.patch("/profile/:profile_id", ensureAuthenticated, new UpdateProfileController().handle);
 router.patch("/profile/:profile_id/experience", ensureAuthenticated, new UpdateProfileExperienceController().handle);
 
-// Seção de Imagem
+// Admin
+router.post("/authenticate/admin", new AuthenticateAdminController().handle);
+router.get("/admin/:email", new ReadAdminController().handle);
+router.delete("/admin/:id", ensurePermission, new DeleteAdminController().handle);
+
+// Blog
+router.get("/post/:id", new ReadPostController().handle);
+router.post("/post", ensurePermission, new CreatePostController().handle);
+router.patch("/post/:id", ensurePermission, new UpdatePostController().handle)
+router.delete("/post/:id", ensurePermission, new DeletePostController().handle)
+
+// Imagem
 router.post("/upload", ensureAuthenticated, new UploadImageController().handle);
 router.delete("/delete", ensureAuthenticated, new DeleteImageController().handle);
 

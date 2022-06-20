@@ -3,7 +3,7 @@ import { DeleteCommentInReportService } from "../../services/DELETE/DeleteCommen
 
 class DeleteCommentInReportController {
     async handle(request: Request, response: Response) {
-        const id = parseInt(request.params.id);
+        const id = parseInt(request.params.comment_id);
 
         const service = new DeleteCommentInReportService();
         const result = await service.execute(id)
