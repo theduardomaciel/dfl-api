@@ -23,21 +23,27 @@ class AuthenticateAdminService {
         })
 
         if (!admin) {
-            const service = new UploadImageService();
-            const { images, deleteHashs } = await service.execute([image_url], role)
-            if (images[0]) { console.log("Image uploaded with success!") }
+            const roleSecured = role !== null ? role : "colector"
 
-            admin = await prismaClient.admin.create({
-                data: {
-                    email: email,
-                    first_name: firstName,
-                    image_url: images[0],
-                    last_name: lastName,
-                    role: role ? role : "colector",
-                    password: password ? password : "e87d1ab34ebb528a4d5e8d4b4f2610e8", //equivale a dashboard-dfl em hash md5
-                }
-            })
-            console.log(admin, `🏗️ Administrador de cargo: ${admin.role} criado com sucesso.`)
+            const service = new UploadImageService();
+            const { images, deleteHashs } = await service.execute([image_url.split("data:image/jpeg;base64,")[1]], role)
+            if (images[0]) { console.log("Admin profile image uploaded with success!") }
+
+            try {
+                admin = await prismaClient.admin.create({
+                    data: {
+                        email: email,
+                        first_name: firstName,
+                        image_url: images[0],
+                        last_name: lastName,
+                        role: roleSecured,
+                        password: password ? password : "e87d1ab34ebb528a4d5e8d4b4f2610e8",
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
+            console.log(admin, `🏗️ Administrador de cargo: "${admin.role}" criado com sucesso.`)
         } else {
             console.log(admin, "🏗️ Administrador logado com sucesso!")
         }

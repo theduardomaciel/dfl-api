@@ -13,7 +13,7 @@ class UploadImageService {
 
         if (!images_base64) return { images, deleteHashs }
 
-        images_base64.forEach(async base64 => {
+        await images_base64.forEach(async base64 => {
             try {
                 const response = await client.upload({
                     image: base64,
@@ -22,12 +22,12 @@ class UploadImageService {
                 });
                 images.push(response.data.link)
                 deleteHashs.push(response.data.deletehash)
-                console.log("✅ UPLOADED image with success!");
+                console.log("✅ UPLOADED image with success!", response.data, images);
             } catch (error) {
                 console.log(error)
             }
         });
-        console.log("Imagem(ns) do relatório adicionadas ao imgur com sucesso!")
+        console.log(images)
         return { images, deleteHashs }
     }
 }

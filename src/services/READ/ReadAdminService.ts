@@ -31,12 +31,6 @@ class ReadAdminService {
                     }
                 })
             }
-            if (!admin) {
-                response.status(400)
-                return {
-                    errorMessage: `No admin was found with the given id.`
-                }
-            }
             return admin;
         } catch (error) {
             console.log(error)
