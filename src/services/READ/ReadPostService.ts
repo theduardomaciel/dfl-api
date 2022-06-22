@@ -36,15 +36,15 @@ class ReadPostService {
                             OR: [
                                 {
                                     content: {
-                                        contains: content,
+                                        contains: content ? content : "",
                                     }
                                 },
                                 {
-                                    draft: draft
+                                    draft: draft ? draft : false,
                                 },
                                 {
                                     redactor: {
-                                        id: redactorId
+                                        id: redactorId ? redactorId : "",
                                     }
                                 }
                             ]
