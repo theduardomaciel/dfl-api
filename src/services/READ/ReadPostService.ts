@@ -28,7 +28,7 @@ class ReadPostService {
                 return { errorCode: "database.error" }
             }
         } else {
-            const { content, draft, searchCount } = filters;
+            const { content, draft, redactorId, searchCount } = filters;
             try {
                 if (content) {
                     const posts = await prismaClient.post.findMany({
@@ -41,6 +41,11 @@ class ReadPostService {
                                 },
                                 {
                                     draft: draft
+                                },
+                                {
+                                    redactor: {
+                                        id: redactorId
+                                    }
                                 }
                             ]
                         },
