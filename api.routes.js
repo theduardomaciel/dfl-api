@@ -62,6 +62,7 @@ router.delete("/admin/:id", ensurePermission, new DeleteAdminController().handle
 
 // Blog
 router.get("/post/:id", new ReadPostController().handle);
+router.get("/post", new ReadPostController().handle);
 router.post("/post", ensurePermission, new CreatePostController().handle);
 router.patch("/post/:id", ensurePermission, new UpdatePostController().handle)
 router.delete("/post/:id", ensurePermission, new DeletePostController().handle)
