@@ -10,7 +10,7 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
 
     if (!authToken) {
         return response.status(401).json({
-            errorCode: "token.invalid",
+            errorCode: "Token não informado.",
         });
     }
 
@@ -27,6 +27,6 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
 
         return next();
     } catch (err) {
-        return response.status(401).json({ errorCode: "token.expired" });
+        return response.status(500).json({ errorCode: "token.expired" });
     }
 }

@@ -28,12 +28,15 @@ export function ensurePermission(request: Request, response: Response, next: Nex
         }
     } else if (type === "Bearer") {
         try {
+            console.log(codifiedLogin)
             const { sub } = verify(codifiedLogin, process.env.JWT_SECRET_ADMIN) as IPayload;
+            console.log(sub)
 
-            request.user_id = sub;
+            request.admin_id = sub;
 
             return next();
         } catch (error) {
+            console.log(error)
             return response.status(401).json({ errorCode: "token.expired" });
         }
     }

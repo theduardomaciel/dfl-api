@@ -51,13 +51,15 @@ model Admin {
 }
 
 model Post {
-    title     String   @id @unique
-    redactor  Admin    @relation(fields: [adminId], references: [id])
-    content   String
-    createdAt DateTime @default(now())
-    views     Int      @default(0)
-    fixed     Boolean  @default(false)
-    draft     Boolean  @default(true)
+    title    String  @id @unique
+    redactor Admin   @relation(fields: [adminId], references: [id])
+    content  String
+    views    Int     @default(0)
+    fixed    Boolean @default(false)
+    draft    Boolean @default(true)
+
+    createdAt    DateTime  @default(now())
+    lastEditedAt DateTime?
 
     adminId String
 
