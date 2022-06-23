@@ -61,6 +61,9 @@ class UpdatePostService {
                 where: {
                     title: title ? title : originalTitle,
                 },
+                include: {
+                    redactor: true,
+                }
             });
 
             if (post) {
