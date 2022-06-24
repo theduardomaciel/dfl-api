@@ -29,6 +29,8 @@ class ReadPostService {
             }
         } else {
             const { redactorId, content, published, pinned, searchCount } = filters;
+            const pinnedBoolean = (pinned === 'true');
+            const publishedBoolean = (published === 'true');
             try {
                 if (content) {
                     const posts = await prismaClient.post.findMany({
@@ -40,7 +42,7 @@ class ReadPostService {
                                     }
                                 },
                                 {
-                                    published: published && published,
+                                    published: published && publishedBoolean,
                                 },
                                 {
                                     redactor: {
@@ -48,12 +50,19 @@ class ReadPostService {
                                     }
                                 },
                                 {
-                                    pinned: pinned && pinned,
+                                    pinned: pinned && pinnedBoolean,
                                 }
                             ]
                         },
                         include: {
-                            redactor: true
+                            redactor: {
+                                select: {
+                                    first_name: true,
+                                    last_name: true,
+                                    image_url: true,
+                                    role: true
+                                }
+                            }
                         },
                         take: searchCount && parseInt(searchCount)
                     })
@@ -61,7 +70,14 @@ class ReadPostService {
                 } else {
                     const posts = await prismaClient.post.findMany({
                         include: {
-                            redactor: true
+                            redactor: {
+                                select: {
+                                    first_name: true,
+                                    last_name: true,
+                                    image_url: true,
+                                    role: true
+                                }
+                            }
                         },
                         take: searchCount && parseInt(searchCount)
                     })

@@ -153,6 +153,9 @@ class UpdateReportService {
             const updatedReport = await prismaClient.report.findUnique({
                 where: {
                     id: report_id
+                },
+                include: {
+                    profile: true
                 }
             })
 
