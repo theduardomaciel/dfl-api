@@ -5,7 +5,7 @@ class ReadPostController {
     async handle(request: Request, response: Response) {
         const service = new ReadPostService();
         try {
-            const result = await service.execute(response, request.params.id, request.query)
+            const result = await service.execute(response, parseInt(request.params.id), request.query)
             return response.json(result);
         } catch (err) {
             return response.json({ error: err.message });

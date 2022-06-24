@@ -2,12 +2,12 @@ import { Response } from "express";
 import prismaClient from "../../prisma";
 
 class ReadPostService {
-    async execute(response?: Response, post_title?, filters?) {
-        if (post_title) {
+    async execute(response?: Response, id?, filters?) {
+        if (id) {
             try {
                 const profile = await prismaClient.post.findUnique({
                     where: {
-                        title: post_title,
+                        id: id,
                     },
                     include: {
                         redactor: {
@@ -28,7 +28,7 @@ class ReadPostService {
                 return { errorCode: "database.error" }
             }
         } else {
-            const { content, draft, redactorId, searchCount } = filters;
+            const { redactorId, content, published, pinned, searchCount } = filters;
             try {
                 if (content) {
                     const posts = await prismaClient.post.findMany({
@@ -40,12 +40,15 @@ class ReadPostService {
                                     }
                                 },
                                 {
-                                    draft: draft ? draft : false,
+                                    published: published && published,
                                 },
                                 {
                                     redactor: {
                                         id: redactorId ? redactorId : "",
                                     }
+                                },
+                                {
+                                    pinned: pinned && pinned,
                                 }
                             ]
                         },

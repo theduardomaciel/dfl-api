@@ -1,14 +1,14 @@
 import prismaClient from "../../prisma"
 
 class DeletePostService {
-    async execute(post_title) {
+    async execute(id) {
         try {
             await prismaClient.post.delete({
                 where: {
-                    title: post_title,
+                    id: id,
                 }
             });
-            console.log(`❗📃 O post de título "${post_title}" foi removido com sucesso.`)
+            console.log(`❗📃 O post de id ${id}" foi removido com sucesso.`)
         } catch (error) {
             console.log(error)
         }
