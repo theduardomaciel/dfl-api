@@ -33,7 +33,7 @@ class ReadPostService {
                 if (content) {
                     const posts = await prismaClient.post.findMany({
                         where: {
-                            OR: [
+                            AND: [
                                 {
                                     content: {
                                         contains: content ? content : "",
