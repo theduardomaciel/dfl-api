@@ -5,7 +5,7 @@ class UpdatePostController {
     async handle(request: Request, response: Response) {
         const service = new UpdatePostService();
         try {
-            const result = await service.execute(response, request.params.id, request.body)
+            const result = await service.execute(response, parseInt(request.params.id), request.body)
             return response.json(result);
         } catch (err) {
             return response.json({ error: err.message });

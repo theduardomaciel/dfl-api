@@ -4,18 +4,18 @@ import prismaClient from "../../prisma"
 type Props = {
     title: string;
     content: string;
-    draft: boolean;
-    fixed: boolean;
+    published: boolean;
+    pinned: boolean;
 }
 
 class UpdatePostService {
-    async execute(response: Response, originalTitle: string, params: Props) {
-        const { title, content, draft, fixed } = params;
+    async execute(response: Response, id: number, params: Props) {
+        const { title, content, published, pinned } = params;
         try {
             if (content) {
                 await prismaClient.post.update({
                     where: {
-                        title: originalTitle,
+                        id: id,
                     },
                     data: {
                         content: content
@@ -23,24 +23,24 @@ class UpdatePostService {
                 });
             }
 
-            if (draft == true || draft === false) {
+            if (published == true || published === false) {
                 await prismaClient.post.update({
                     where: {
-                        title: originalTitle,
+                        id: id,
                     },
                     data: {
-                        draft: draft
+                        published: published
                     }
                 });
             }
 
-            if (fixed === true || fixed === false) {
+            if (pinned === true || pinned === false) {
                 await prismaClient.post.update({
                     where: {
-                        title: originalTitle,
+                        id: id,
                     },
                     data: {
-                        fixed: fixed
+                        pinned: pinned
                     }
                 });
             }
@@ -49,7 +49,7 @@ class UpdatePostService {
             if (title) {
                 await prismaClient.post.update({
                     where: {
-                        title: originalTitle,
+                        id: id,
                     },
                     data: {
                         title: title
@@ -59,7 +59,7 @@ class UpdatePostService {
 
             const post = await prismaClient.post.findUnique({
                 where: {
-                    title: title ? title : originalTitle,
+                    id: id,
                 },
                 include: {
                     redactor: true,
@@ -67,15 +67,15 @@ class UpdatePostService {
             });
 
             if (post) {
-                console.log(`📃 Post atualizado com sucesso!`);
+                console.log(`📃 Post de id ${id} atualizado com sucesso!`);
                 return post;
             } else {
                 console.log("❌ Ocorreu um erro ao tentar atualizar o post.")
             }
         } catch (error) {
-            console.log(error);
+            console.log(error, "The id provided does not belong to a post.");
             response.status(400)
-            return { errorMessage: "The id (title) provided does not belong to a post." }
+            return { errorMessage: "The id provided does not belong to a post." }
         }
     }
 }
