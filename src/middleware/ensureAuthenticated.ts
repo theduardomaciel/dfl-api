@@ -9,7 +9,7 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
     const authToken = request.headers.authorization;
 
     if (!authToken) {
-        return response.status(401).json({
+        return response.status(500).json({
             errorCode: "Token não informado.",
         });
     }
@@ -27,6 +27,15 @@ export function ensureAuthenticated(request: Request, response: Response, next: 
 
         return next();
     } catch (err) {
-        return response.status(500).json({ errorCode: "token.expired" });
+        // Caso não consiga pelo login do usuário, tentamos o login de admin
+        try {
+            const { sub } = verify(token, process.env.JWT_SECRET_ADMIN) as IPayload;
+
+            request.user_id = sub;
+
+            return next();
+        } catch (error) {
+            return response.status(401).json({ errorCode: "token.expired" });
+        }
     }
 }
