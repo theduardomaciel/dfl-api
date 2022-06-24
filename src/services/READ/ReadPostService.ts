@@ -32,13 +32,14 @@ class ReadPostService {
             const pinnedBoolean = (pinned === 'true');
             const publishedBoolean = (published === 'true');
             try {
-                if (content) {
+                if (filters) {
+                    console.log("Retornando posts com filtros.")
                     const posts = await prismaClient.post.findMany({
                         where: {
                             AND: [
                                 {
                                     content: {
-                                        contains: content ? content : "",
+                                        contains: content,
                                     }
                                 },
                                 {
@@ -46,7 +47,7 @@ class ReadPostService {
                                 },
                                 {
                                     redactor: {
-                                        id: redactorId ? redactorId : "",
+                                        id: redactorId,
                                     }
                                 },
                                 {
