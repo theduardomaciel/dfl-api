@@ -4,13 +4,14 @@ import prismaClient from "../../prisma"
 type Props = {
     title: string;
     content: string;
+    category: string;
     published: boolean;
     pinned: boolean;
 }
 
 class UpdatePostService {
     async execute(response: Response, id: number, params: Props) {
-        const { title, content, published, pinned } = params;
+        const { title, content, published, category, pinned } = params;
         try {
             if (content) {
                 await prismaClient.post.update({
@@ -19,6 +20,17 @@ class UpdatePostService {
                     },
                     data: {
                         content: content
+                    }
+                });
+            }
+
+            if (category) {
+                await prismaClient.post.update({
+                    where: {
+                        id: id,
+                    },
+                    data: {
+                        category: category
                     }
                 });
             }

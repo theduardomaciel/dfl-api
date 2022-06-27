@@ -55,6 +55,7 @@ model Post {
     title     String
     redactor  Admin   @relation(fields: [adminId], references: [id])
     content   String
+    category  String  @default("general")
     views     Int     @default(0)
     pinned    Boolean @default(false)
     published Boolean @default(false)

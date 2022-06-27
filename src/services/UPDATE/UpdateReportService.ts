@@ -155,7 +155,8 @@ class UpdateReportService {
                     id: report_id
                 },
                 include: {
-                    profile: true
+                    profile: true,
+                    comments: true
                 }
             })
 
