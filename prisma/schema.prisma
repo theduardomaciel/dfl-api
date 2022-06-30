@@ -53,7 +53,7 @@ model Admin {
 model Post {
     id        Int     @id @unique @default(autoincrement())
     title     String
-    redactor  Admin   @relation(fields: [adminId], references: [id])
+    redactor  Admin   @relation(fields: [adminId], references: [id], onDelete: Cascade)
     content   String
     category  String  @default("general")
     views     Int     @default(0)

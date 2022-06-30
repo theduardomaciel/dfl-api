@@ -28,7 +28,7 @@ class ReadPostService {
                 return { errorCode: "database.error" }
             }
         } else {
-            const { redactorId, content, published, pinned, searchCount } = filters;
+            const { redactorId, content, title, published, pinned, searchCount } = filters;
             const pinnedBoolean = (pinned === 'true');
             const publishedBoolean = (published === 'true');
             try {
@@ -40,6 +40,11 @@ class ReadPostService {
                                 {
                                     content: {
                                         contains: content,
+                                    }
+                                },
+                                {
+                                    title: {
+                                        contains: title,
                                     }
                                 },
                                 {
