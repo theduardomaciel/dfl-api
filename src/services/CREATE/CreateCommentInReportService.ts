@@ -8,12 +8,12 @@ class CreateCommentInReportService {
                 data: {
                     profile: {
                         connect: {
-                            id: profile_id
+                            id: parseInt(profile_id)
                         }
                     },
                     report: {
                         connect: {
-                            id: report_id
+                            id: parseInt(report_id)
                         }
                     },
                     content: content

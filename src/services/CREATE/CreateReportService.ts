@@ -10,7 +10,6 @@ type Props = {
     address: string,
     coordinates: Array<number>,
     imagesBase64: Array<string>,
-    images_deleteHashs: Array<string>,
     tags: string,
     suggestion: string,
     hasTrashBins: boolean,
