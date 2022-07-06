@@ -21,8 +21,7 @@ class ReadReportService {
             }
         } else {
             const { location, username, exclusionsId, profileToExcludeId, searchCount, includeInfo } = filters;
-            const idsToExcludeParsed = JSON.parse(exclusionsId);
-            const idsToExclude = idsToExcludeParsed.map(id => parseInt(id))
+            const idsToExcludeParsed = exclusionsId ? exclusionsId.split(",").map(id => parseInt(id)) : [];
             try {
                 if (location || username) {
                     const reports = await prismaClient.report.findMany({
@@ -45,7 +44,7 @@ class ReadReportService {
                             ],
                             AND: [
                                 {
-                                    id: { notIn: idsToExclude },
+                                    id: { notIn: idsToExcludeParsed },
                                 },
                                 {
                                     profile_id: { not: profileToExcludeId }
@@ -81,7 +80,7 @@ class ReadReportService {
                     return reports;
                 }
             } catch (error) {
-                console.log(error)
+                console.log(error, "erro")
                 response.status(500)
                 return error
             }
