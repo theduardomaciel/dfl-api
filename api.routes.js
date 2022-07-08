@@ -71,4 +71,8 @@ router.delete("/post/:id", ensurePermission, new DeletePostController().handle)
 router.post("/upload", ensureAuthenticated, new UploadImageController().handle);
 router.delete("/delete", ensureAuthenticated, new DeleteImageController().handle);
 
+router.get('/', (req, res) => {
+    return res.send('0.0.1');
+});
+
 export { router }
