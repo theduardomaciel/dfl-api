@@ -20,7 +20,7 @@ class ReadReportService {
                 return { errorCode: "database.error" }
             }
         } else {
-            const { location, username, exclusionsId, profileToExcludeId, searchCount, includeInfo } = filters;
+            const { location, username, exclusionsId, approved, resolved, profileToExcludeId, searchCount, includeInfo } = filters;
             const idsToExcludeParsed = exclusionsId ? exclusionsId.split(",").map(id => parseInt(id)) : [];
             try {
                 if (location || username) {
@@ -47,8 +47,13 @@ class ReadReportService {
                                     id: { notIn: idsToExcludeParsed },
                                 },
                                 {
+                                    approved: approved && approved,
+                                },
+                                {
+                                    resolved: resolved && resolved,
+                                },
+                                {
                                     profile_id: { not: profileToExcludeId }
-
                                 }
                             ]
                         },
