@@ -47,10 +47,10 @@ class ReadReportService {
                                     id: { notIn: idsToExcludeParsed },
                                 },
                                 {
-                                    approved: approved && approved,
+                                    approved: approved && approved === "true" ? true : false,
                                 },
                                 {
-                                    resolved: resolved && resolved,
+                                    resolved: resolved && resolved === "true" ? true : false,
                                 },
                                 {
                                     profile_id: { not: profileToExcludeId }
