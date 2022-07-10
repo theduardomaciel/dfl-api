@@ -72,7 +72,7 @@ router.post("/upload", ensureAuthenticated, new UploadImageController().handle);
 router.delete("/delete", ensureAuthenticated, new DeleteImageController().handle);
 
 router.get('/', (req, res) => {
-    return res.send('1');
+    return res.send('3');
 });
 
 export { router }

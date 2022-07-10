@@ -66,7 +66,7 @@ class CreateReportService {
             })
 
             // Adicionamos XP ao perfil do usuário, e subimos seu nível caso haja experiência suficiente
-            const { USER_LEVEL, USER_EXPERIENCE } = CheckUserLevelAndExperience(profile)
+            const { USER_LEVEL, USER_EXPERIENCE, EXPERIENCE_GAINED } = CheckUserLevelAndExperience(profile)
             console.log("NEW LEVEL:", USER_LEVEL, "NEW EXPERIENCE: ", USER_EXPERIENCE)
             const updatedProfile = await prismaClient.profile.update({
                 where: {
@@ -85,7 +85,10 @@ class CreateReportService {
                 }
             })
 
-            return updatedProfile
+            return {
+                profile: updatedProfile,
+                experienceGained: EXPERIENCE_GAINED
+            }
         } catch (error) {
             console.log(error)
             response.status(500)

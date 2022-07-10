@@ -28,6 +28,8 @@ function CheckUserLevelAndExperience(userProfile) {
 
     const LEVEL_OBTAINED_WITH_ACTUAL_XP = GetLevelObtainedWithActualXp()
 
+    const EXPERIENCE_GAINED = USER_EXPERIENCE - userProfile.experience
+
     // Caso o usuário tenha subido de nível, atualizamos esse valor e reiniciamos a quantidade de experiência que ele tem
     if (LEVEL_OBTAINED_WITH_ACTUAL_XP > USER_LEVEL) {
         USER_LEVEL = LEVEL_OBTAINED_WITH_ACTUAL_XP
@@ -35,7 +37,7 @@ function CheckUserLevelAndExperience(userProfile) {
         console.log(`O usuário subiu de nível! Ele agora é um ${NODE_LEVELS_DATA[USER_LEVEL].title} (Nível ${LEVEL_OBTAINED_WITH_ACTUAL_XP})!`)
     }
 
-    return { USER_LEVEL, USER_EXPERIENCE }
+    return { USER_LEVEL, USER_EXPERIENCE, EXPERIENCE_GAINED }
 }
 
 class UpdateProfileExperienceService {

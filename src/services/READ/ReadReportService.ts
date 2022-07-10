@@ -21,6 +21,7 @@ class ReadReportService {
             }
         } else {
             const { location, username, exclusionsId, approved, resolved, profileToExcludeId, searchCount, includeInfo } = filters;
+            console.log(filters)
             const idsToExcludeParsed = exclusionsId ? exclusionsId.split(",").map(id => parseInt(id)) : [];
             try {
                 if (location || username) {
@@ -40,7 +41,7 @@ class ReadReportService {
                                             mode: "insensitive"
                                         },
                                     },
-                                }
+                                },
                             ],
                             AND: [
                                 {
@@ -67,10 +68,14 @@ class ReadReportService {
                             profile: true
                         }
                     })
-                    console.log(reports, searchCount ? `Obtivemos os ${searchCount} primeiros relatórios com os filtros determinados.` : `Obtivemos os relatórios com os filtros determinados.`)
+                    console.log(reports.length, searchCount ? `Obtivemos os ${searchCount} primeiros relatórios com os filtros determinados.` : `Obtivemos os relatórios com os filtros determinados.`)
                     return reports;
                 } else {
                     const reports = await prismaClient.report.findMany({
+                        where: {
+                            approved: approved && approved === "true" ? true : false,
+                            resolved: resolved && resolved === "true" ? true : false,
+                        },
                         take: searchCount && parseInt(searchCount),
                         include: includeInfo && {
                             comments: {
