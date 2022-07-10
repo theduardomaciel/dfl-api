@@ -72,10 +72,6 @@ class ReadReportService {
                     return reports;
                 } else {
                     const reports = await prismaClient.report.findMany({
-                        where: {
-                            approved: approved && approved === "true" ? true : false,
-                            resolved: resolved && resolved === "true" ? true : false,
-                        },
                         take: searchCount && parseInt(searchCount),
                         include: includeInfo && {
                             comments: {
