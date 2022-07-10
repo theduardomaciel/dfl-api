@@ -156,7 +156,11 @@ class UpdateReportService {
                 },
                 include: {
                     profile: true,
-                    comments: true
+                    comments: {
+                        include: {
+                            profile: true
+                        }
+                    },
                 }
             })
 
