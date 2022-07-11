@@ -79,7 +79,7 @@ class AuthenticateUserService {
                     data: {
                         google_id: id,
                         first_name: givenName,
-                        last_name: familyName,
+                        last_name: familyName ? familyName : " ",
                         email: email,
                         profile: {
                             create: {
