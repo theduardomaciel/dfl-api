@@ -56,43 +56,51 @@ class AuthenticateUserService {
         console.log(userInfo, "Usuário está entrando com as seguintes anteriores.")
 
         let user;
-        user = await prismaClient.user.findUnique({
-            where: {
-                email: email
-            },
-            include: {
-                profile: {
-                    include: {
-                        reports: true,
-                    }
-                },
-            }
-        })
-
-        if (!user) {
-            user = await prismaClient.user.create({
-                data: {
-                    google_id: id,
-                    first_name: givenName,
-                    last_name: familyName,
-                    email: email,
-                    profile: {
-                        create: {
-                            image_url: photo,
-                            ratings: {
-                                "note1": [],
-                                "note2": [],
-                                "note3": [],
-                                "note4": [],
-                                "note5": [],
-                            }
-                        }
-                    },
+        try {
+            user = await prismaClient.user.findUnique({
+                where: {
+                    email: email
                 },
                 include: {
-                    profile: true,
+                    profile: {
+                        include: {
+                            reports: true,
+                        }
+                    },
                 }
             })
+        } catch (error) {
+            console.log(error)
+        }
+
+        if (!user) {
+            try {
+                user = await prismaClient.user.create({
+                    data: {
+                        google_id: id,
+                        first_name: givenName,
+                        last_name: familyName,
+                        email: email,
+                        profile: {
+                            create: {
+                                image_url: photo,
+                                ratings: {
+                                    "note1": [],
+                                    "note2": [],
+                                    "note3": [],
+                                    "note4": [],
+                                    "note5": [],
+                                }
+                            }
+                        },
+                    },
+                    include: {
+                        profile: true,
+                    }
+                })
+            } catch (error) {
+                console.log(error)
+            }
             console.log(user, "🙋 Usuário CRIADO com sucesso!")
         } else {
             console.log(user, "🙋 Usuário LOGADO com sucesso!")
