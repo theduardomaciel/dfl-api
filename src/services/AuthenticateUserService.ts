@@ -53,6 +53,8 @@ class AuthenticateUserService {
         const { email, id, familyName, givenName, photo } = userInfo;
         //const [gender, birthday] = await GetAdditionalInfo(access_token)
 
+        console.log(userInfo, "Usuário está entrando com as seguintes anteriores.")
+
         let user;
         user = await prismaClient.user.findUnique({
             where: {
@@ -96,6 +98,8 @@ class AuthenticateUserService {
             console.log(user, "🙋 Usuário LOGADO com sucesso!")
         }
 
+        console.log(user)
+
         const token = sign({
             user: {
                 first_name: user.first_name,
@@ -103,6 +107,8 @@ class AuthenticateUserService {
                 id: user.id,
             },
         }, process.env.JWT_SECRET, { subject: user.google_id, expiresIn: "120d", audience: "app-user" });
+
+        console.log(token, "🙋 Token criado com sucesso!")
 
         return { token, user };
     }
