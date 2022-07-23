@@ -16,16 +16,16 @@
 
 
 ## 💻 Projeto
-API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionamento dos seguintes elementos:
-* Website
-* Dashboard
-* Mobile App
+API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionamento das seguintes sub-aplicações:
+* [Website (base/dashboard/blog)](https://github.com/theduardomaciel/dfl-web)
+* [Mobile app](https://github.com/theduardomaciel/dfl-mobile)
 
 ## ✨ Tecnologias
 
+-   [ ] Node.js
+-   [ ] JavaScript (w/TypeScript)
 -   [ ] Prisma
 -   [ ] PostgreSQL
--   [ ] JavaScript
 -   [ ] Express
 -   [ ] Axios
 
@@ -100,6 +100,6 @@ Patch Body:
 
 ## 📄 Licença
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para mais detalhes.
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 <br />
