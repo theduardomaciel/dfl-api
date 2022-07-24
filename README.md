@@ -30,11 +30,11 @@ API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionam
 -   [ ] Express
 -   [ ] Axios
 
-## Utilizando o aplicativo oficial
+## Utilizando o aplicativo padrão
 
-Para poder baixar o app em seu dispositivo móvel Android (único sistema operacional disponível atualmente), visite o [site do DFL](https://dfl.vercel.app) e navegue até a área de download para instalar o arquivo .apk do aplicativo.
+Para poder baixar o app padrão em seu dispositivo móvel Android (único sistema operacional disponível atualmente), visite o [site do DFL](https://dfl.vercel.app) e navegue até a área de download para instalar o arquivo .apk do aplicativo.
 
-> Atualmente, o app está em acesso antecipado e pode conter diversos bugs. Para reportar algum problema, adicione um [issue](https://github.com/theduardomaciel/dfl-mobile/issues) no projeto do app oficial para que o erro possa ser rastreado e resolvido. 
+> Para reportar algum problema, adicione um [issue](https://github.com/theduardomaciel/dfl-mobile/issues) para que o erro possa ser rastreado e resolvido. 
 
 # API Routes
 
