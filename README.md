@@ -8,7 +8,8 @@
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=346259&labelColor=26413C">
-    <img src="https://img.shields.io/static/v1?label=version&message=api&color=346259&labelColor=26413C" alt="API" />
+  <img src="https://img.shields.io/static/v1?label=version&message=api&color=346259&labelColor=26413C" alt="API" />
+  <img alt="Lines" src="https://img.shields.io/tokei/lines/github/theduardomaciel/dfl-api?color=346259&&labelColor=26413C&label=Lines%20of%20code" />
 </p>
 
 
@@ -28,6 +29,12 @@ API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionam
 -   [ ] PostgreSQL
 -   [ ] Express
 -   [ ] Axios
+
+## Utilizando o aplicativo oficial
+
+Para poder baixar o app em seu dispositivo móvel Android (único sistema operacional disponível atualmente), visite o [site do DFL](https://dfl.vercel.app) e navegue até a área de download para instalar o arquivo .apk do aplicativo.
+
+> Atualmente, o app está em acesso antecipado e pode conter diversos bugs. Para reportar algum problema, adicione um [issue](https://github.com/theduardomaciel/dfl-mobile/issues) no projeto do app oficial para que o erro possa ser rastreado e resolvido. 
 
 # API Routes
 
