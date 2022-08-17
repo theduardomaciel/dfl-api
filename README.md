@@ -9,7 +9,7 @@
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=346259&labelColor=26413C">
   <img src="https://img.shields.io/static/v1?label=version&message=api&color=346259&labelColor=26413C" alt="API" />
-  <img alt="Lines" src="https://img.shields.io/tokei/lines/github/theduardomaciel/dfl-api?color=346259&&labelColor=26413C&label=Lines%20of%20code" />
+  <img alt="Lines" src="https://img.shields.io/tokei/lines/github/theduardomaciel/dfl-api?color=346259&&labelColor=26413C&label=lines%20of%20code" />
 </p>
 
 
@@ -18,10 +18,11 @@
 
 ## 💻 Projeto
 API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionamento das seguintes sub-aplicações:
+API of the DFL (a.k.a Garbage Spot Detector) application, essential for the operation of the following sub-applications:
 * [Website (base/dashboard/blog)](https://github.com/theduardomaciel/dfl-web)
 * [Mobile app](https://github.com/theduardomaciel/dfl-mobile)
 
-## ✨ Tecnologias
+## ✨ Technologies
 
 -   [ ] Node.js
 -   [ ] JavaScript (w/TypeScript)
@@ -30,11 +31,11 @@ API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionam
 -   [ ] Express
 -   [ ] Axios
 
-## Utilizando o aplicativo padrão
+## Using the default application
 
-Para poder baixar o app padrão em seu dispositivo móvel Android (único sistema operacional disponível atualmente), visite o [site do DFL](https://dfl.vercel.app) e navegue até a área de download para instalar o arquivo .apk do aplicativo.
+To be able to download the default app on your Android mobile device (the only operating system currently available), visit the [DFL website](https://dfl.vercel.app) and navigate to the download area to install the .apk file of the application.
 
-> Para reportar algum problema, adicione um [issue](https://github.com/theduardomaciel/dfl-mobile/issues) para que o erro possa ser rastreado e resolvido. 
+> To report an issue, please add an [issue](https://github.com/theduardomaciel/dfl-mobile/issues) so the bug can be tracked and resolved.
 
 # API Routes
 
@@ -105,8 +106,8 @@ Patch Body:
 | /report/[report_id]/comment/[comment_id] | Returns a comment of a report with the given ID's | ✅               | GET    |
 | /report/[report_id]/comments             | Returns all the comments of a report.             | ✅               | GET    |
 
-## 📄 Licença
+## 📄 License
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
 
 <br />
