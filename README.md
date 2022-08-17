@@ -17,8 +17,7 @@
 
 
 ## 💻 Projeto
-API da aplicação DFL - Detector de Focos de Lixo, fundamental para o funcionamento das seguintes sub-aplicações:
-API of the DFL (a.k.a Garbage Spot Detector) application, essential for the operation of the following sub-applications:
+API of the DFL (a.k.a GSD - Garbage Spot Detector) application, essential for the operation of the following sub-applications:
 * [Website (base/dashboard/blog)](https://github.com/theduardomaciel/dfl-web)
 * [Mobile app](https://github.com/theduardomaciel/dfl-mobile)
 
